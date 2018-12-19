@@ -1,0 +1,22 @@
+{
+    "name": "hakkuino-rgb",
+    "keywords": "rgb, led, animation",
+    "description": "A lib to animate RGB LED.",
+    "authors":
+    {
+        "name": "Nicolas Marsal",
+        "url": ""
+    },
+    "repository":
+    {
+        "type": "git",
+        "url": "https://github.com/hakkuino/hakkuino-rgb"
+    },
+    "extern":
+    {
+        "include": "RgbLed"
+    },
+    "version": "1.0",
+    "frameworks": "arduino",
+    "platforms": "atmelavr"
+}
