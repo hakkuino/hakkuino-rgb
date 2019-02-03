@@ -1,6 +1,6 @@
 #include <RLoopTo.h>
 
-RLoopTo::RLoopTo(unsigned int start, unsigned int restartAt, int occurences) : RgbLedAnimationStep(start)
+RLoopTo::RLoopTo( unsigned int restartAt, int occurences) : RgbLedAnimationStep(0)
 {
   this->_restartAt = restartAt;
   this->_occurences = occurences;

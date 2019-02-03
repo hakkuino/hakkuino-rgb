@@ -10,8 +10,9 @@ class RFadeTo : public RgbLedAnimationStep
   Color _sourceColor;
   Color _newColor;
   public:
-  RFadeTo(unsigned int start, Color newColor);
+  RFadeTo(unsigned int duration, Color newColor);
   void run(RgbLed* animation);
+  void ensureFinalState(RgbLed* animation);
 };
 
 #endif

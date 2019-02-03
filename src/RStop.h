@@ -6,7 +6,7 @@
 class RStop: public RgbLedAnimationStep
 {
   public:
-  RStop(unsigned int start);
+  RStop();
   boolean isActive(RgbLed* animation);
   void run(RgbLed* animation);
 };

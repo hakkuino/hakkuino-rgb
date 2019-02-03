@@ -1,7 +1,7 @@
 #include <RSetTo.h>
 
 
-RSetTo::RSetTo(unsigned int start, Color newColor) : RgbLedAnimationStep(start)
+RSetTo::RSetTo(unsigned int duration, Color newColor) : RgbLedAnimationStep(duration)
 {
   this->_newColor=newColor;
 }

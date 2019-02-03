@@ -1,6 +1,6 @@
 #include <RStop.h>
 
-RStop::RStop(unsigned int start) : RgbLedAnimationStep(start)
+RStop::RStop() : RgbLedAnimationStep(0)
 {
   
 }
@@ -10,5 +10,6 @@ boolean RStop::isActive(RgbLed* animation)
 }
 void RStop::run(RgbLed* animation)
 {
+  animation->ensureLastAnimationStepState();
   animation->stopAnimation();
 }

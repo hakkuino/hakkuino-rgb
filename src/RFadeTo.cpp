@@ -1,6 +1,6 @@
 #include <RFadeTo.h>
 
-RFadeTo::RFadeTo(unsigned int start, Color newColor) : RgbLedAnimationStep(start)
+RFadeTo::RFadeTo(unsigned int duration, Color newColor) : RgbLedAnimationStep(duration)
 {
   this->_newColor = newColor;
   this->_initialized=false;
@@ -19,4 +19,9 @@ void RFadeTo::run(RgbLed* animation)
     
   Color c = Color(r,g,b);
   animation->setColor(c);
+}
+
+void RFadeTo::ensureFinalState(RgbLed* animation)
+{
+  animation->setColor(this->_newColor);
 }

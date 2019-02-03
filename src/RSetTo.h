@@ -8,7 +8,7 @@ class RSetTo : public RgbLedAnimationStep
   private:
   Color _newColor;
   public:
-  RSetTo(unsigned int start, Color newColor);
+  RSetTo(unsigned int duration, Color newColor);
   void run(RgbLed* animation);
 };
 

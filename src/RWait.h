@@ -6,7 +6,7 @@
 class RWait: public RgbLedAnimationStep
 {
   public:
-  RWait(unsigned int start);
+  RWait(unsigned int duration);
   void run(RgbLed* animation);
 };
 

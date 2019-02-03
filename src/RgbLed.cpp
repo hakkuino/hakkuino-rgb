@@ -4,6 +4,7 @@ RgbLed::RgbLed()
 {
   this->_isActive = false;
   this->_stepsNb = 0;
+  this->_currentStepIndex = -1;
   this->_brightness = 1;
   this->_calibration = Color(255,255,255);
 }
@@ -68,17 +69,18 @@ void RgbLed::runAnimation()
   }
   this->_currentTime += millis() - this->_previousMillis;
   this->_previousMillis = millis();
-  for(unsigned short i=0; i<this->_stepsNb; i++)
+  for(this->_currentStepIndex=0; this->_currentStepIndex<this->_stepsNb; this->_currentStepIndex++)
   {
-    TRACE("Test for step " + String(i) + " - Millis : " + String(this->_currentTime));
-    if (this->_steps[i]->isActive(this))
+    TRACE("Test for step " + String(this->_currentStepIndex) + " - Millis : " + String(this->_currentTime));
+    if (this->_steps[this->_currentStepIndex]->isActive(this))
     {
-      TRACE("Launch step " + String(i));
-      this->_steps[i]->run(this);
+      TRACE("Launch step " + String(this->_currentStepIndex));
+      this->_steps[this->_currentStepIndex]->run(this);
       break;
     }
   }
 }
+
 void RgbLed::startAnimation()
 {
   if (!this->_isActive)
@@ -118,14 +120,15 @@ void RgbLed::setAnimation(int arraySize, RgbLedAnimationStep* steps[])
   for(unsigned short i=0; i<arraySize;i++)
   {
     this->_steps[i] = (steps[i]);
-    if(i<(arraySize-1))
-    {
-       this->_steps[i]->setDuration(steps[i+1]->getStart() - steps[i]->getStart());
+    if (i == 0){
+      this->_steps[i]->setStart(0);
+    }
+    else{
+      this->_steps[i]->setStart(steps[i-1]->getStart() + steps[i-1]->getDuration());
     }
   }
  
 }
-
 void RgbLed::resetAnimation()
 {
   for(unsigned short i=0; i<this->_stepsNb; i++)
@@ -135,11 +138,15 @@ void RgbLed::resetAnimation()
   }
   delete this->_steps;
 }
-
-
-RgbLedAnimationStep::RgbLedAnimationStep(unsigned int start)
+void RgbLed::ensureLastAnimationStepState()
 {
-  this->_start = start;
+  this->_steps[this->_currentStepIndex - 1]->ensureFinalState(this);
+}
+
+
+RgbLedAnimationStep::RgbLedAnimationStep(unsigned int duration)
+{
+  this->_duration = duration;
 }
 boolean RgbLedAnimationStep::isActive(RgbLed* animation)
 {
@@ -150,7 +157,18 @@ void RgbLedAnimationStep::setDuration(unsigned int duration)
 {
   this->_duration = duration;
 }
+void RgbLedAnimationStep::setStart(unsigned int start)
+{
+  this->_start = start;
+}
 unsigned int RgbLedAnimationStep::getStart()
 {
   return this->_start;
+}
+unsigned int RgbLedAnimationStep::getDuration()
+{
+  return this->_duration;
+}
+void RgbLedAnimationStep::ensureFinalState(RgbLed* animation)
+{
 }

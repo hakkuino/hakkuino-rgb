@@ -11,13 +11,17 @@ class RgbLed;
 class RgbLedAnimationStep{
 protected:
 public:
+  friend class RgbLed;
   unsigned int _duration;
   unsigned int _start;
-  RgbLedAnimationStep(unsigned int start);
+  RgbLedAnimationStep(unsigned int duration);
   virtual boolean isActive(RgbLed* animation);
   virtual void run(RgbLed* animation) = 0;
   void setDuration(unsigned int duration);
+  void setStart(unsigned int start);
   unsigned int getStart();
+  unsigned int getDuration();
+  void ensureFinalState(RgbLed* animation);
 };
 
 class RgbLed
@@ -25,6 +29,7 @@ class RgbLed
 private:
   RgbLedAnimationStep** _steps;
   byte _stepsNb;
+  byte _currentStepIndex;
   boolean _isActive;
   byte _pinR;
   byte _pinG;
@@ -33,11 +38,10 @@ private:
   float _brightness;
   Color _calibration;
 public:
+  friend class RgbLedAnimationStep;
   Color _currentColor;
   unsigned long _currentTime;
   void setColor(Color color);
-  friend class RgbLedAnimationStep;
-
   RgbLed();
   ~RgbLed();
   void init(byte pinR, byte pinG, byte pinB);
@@ -51,6 +55,7 @@ public:
   float getBrightness();
   boolean isActive();
   void setCalibration(Color c);
+  void ensureLastAnimationStepState();
 };
 
 #endif

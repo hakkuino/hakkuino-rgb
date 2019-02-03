@@ -9,7 +9,7 @@ private:
   unsigned int _restartAt;
   int _occurences;  
 public:
-  RLoopTo(unsigned int start, unsigned int restartAt, int occurences);
+  RLoopTo(unsigned int restartAt, int occurences);
   boolean isActive(RgbLed* animation);
   void run(RgbLed* animation);
 };
